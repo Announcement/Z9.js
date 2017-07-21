@@ -1,0 +1,4 @@
+/* Ghost.js 0.3.0
+ * (c) 2017 Danijel Durakovic
+ * MIT License */
+ 
