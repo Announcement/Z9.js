@@ -1,4 +1,4 @@
-Ghost.js is a tiny HTML5 game engine.
+Ghost.js is a tiny HTML5 game engine intended primarily for simple 2D game development.
 
 ![Mascot](mascot.png)
 

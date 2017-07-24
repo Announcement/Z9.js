@@ -59,9 +59,9 @@ ghost.compose = function(/**/) {
 		return Object.assign.apply(null, arguments);
 	}
 	// non-es6
-	var obj = {};
+	var obj = arguments[0];
 	var n_args = arguments.length;
-	for (var i = 0; i < n_args; ++i) {
+	for (var i = 1; i < n_args; ++i) {
 		var component = arguments[i];
 		if (!component)
 			continue;

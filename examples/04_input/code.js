@@ -3,7 +3,7 @@
  * 
  */
 
-function DraggableSquare(me) {
+function DraggableSquare(state) {
 	// position
 	var x = 170;
 	var y = 120;
@@ -17,7 +17,7 @@ function DraggableSquare(me) {
 
 	// draw the square
 	this.draw = function() {
-		me.paint.rectFill(x, y, size, size, color);
+		state.paint.rectFill(x, y, size, size, color);
 	};
 
 	// register events

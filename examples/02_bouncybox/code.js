@@ -4,7 +4,7 @@
  */
  
 // bouncy box class
-function BouncyBox(me, options) {
+function BouncyBox(state, options) {
 	// position and velocity of the box
 	var pos = { x: options.x, y: options.y };
 	var vel = { x: options.vel_x, y: options.vel_y };
@@ -21,11 +21,11 @@ function BouncyBox(me, options) {
 
 	this.draw = function() {
 		// we have access to state's paint
-		me.paint.rectFill(pos.x, pos.y, 50, 50, options.color);
+		state.paint.rectFill(pos.x, pos.y, 50, 50, options.color);
 	};
 }
 
-// create the main game sstate
+// create the main game state
 var myState = new ghost.State();
 
 myState.init = function() {

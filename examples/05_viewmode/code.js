@@ -4,7 +4,7 @@
  */
 
 // bouncy box class
-function BouncyBox(me, options) {
+function BouncyBox(state, options) {
 	// position, velocity and size of the box
 	var pos = { x: options.x, y: options.y };
 	var vel = { x: options.vel_x, y: options.vel_y };
@@ -14,8 +14,8 @@ function BouncyBox(me, options) {
 		// bounce the box around
 		pos.x += vel.x * delta;
 		pos.y += vel.y * delta;
-		var max_x = me.surface.width - size;
-		var max_y = me.surface.height - size;
+		var max_x = state.surface.width - size;
+		var max_y = state.surface.height - size;
 		if (pos.x >= max_x) {
 			pos.x = max_x;
 			vel.x = -vel.x;
@@ -34,7 +34,7 @@ function BouncyBox(me, options) {
 
 	this.draw = function() {
 		// we have access to state's paint
-		me.paint.rectFill(pos.x, pos.y, size, size, options.color);
+		state.paint.rectFill(pos.x, pos.y, size, size, options.color);
 	};
 }
 
