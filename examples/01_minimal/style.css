@@ -2,7 +2,7 @@ body {
 	margin: 0;
 	background-color: #eee;
 }
-#ghostcontainer {
+#abysscontainer {
 	position: absolute;
 	background-color: #ddd;
 	width: 100%;
@@ -13,7 +13,7 @@ body {
 	bottom: 0;
 	margin: auto;
 }
-#ghostexample {
+#abyssexample {
 	position: absolute;
 	background-color: #fff;
 	left: 0;

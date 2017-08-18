@@ -26,13 +26,13 @@ body {
 	margin: 0 auto;
 	font-family: sans-serif;
 }
-#ghostcontainer {
+#abysscontainer {
 	position: absolute;
 	background-color: #ddd;
 	bottom: 0;
 	width: 100%;
 	height: 80%;
 }
-#ghostexample {
+#abyssexample {
 	background-color: #fff;
 }

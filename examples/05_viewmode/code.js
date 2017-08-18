@@ -1,5 +1,5 @@
 /*
- *  Ghost.js - Example 05 - View Mode
+ *  Abyss.js - Example 05 - View Mode
  * 
  */
 
@@ -39,20 +39,20 @@ function BouncyBox(state, options) {
 }
 
 // create the main state
-var myState = new ghost.State();
+var myState = new abyss.State();
 
 // called when state initializes
 myState.init = function() {
 	// create several bouncing boxes
 	this.boxes = [];
 	for (var i = 0; i < 50; i++) {
-		var box_size = ghost.getRandomInt(10, 30);
+		var box_size = abyss.getRandomInt(10, 30);
 		this.boxes.push(new BouncyBox(this, {
-			x: ghost.getRandomInt(0, 400 - box_size),
-			y: ghost.getRandomInt(0, 300 - box_size),
-			vel_x: ghost.getRandomInt(-200, 200) / 100,
-			vel_y: ghost.getRandomInt(-200, 200) / 100,
-			color: ghost.choose(['orange', 'red', 'blue', 'purple', 'gray', 'green']),
+			x: abyss.getRandomInt(0, 400 - box_size),
+			y: abyss.getRandomInt(0, 300 - box_size),
+			vel_x: abyss.getRandomInt(-200, 200) / 100,
+			vel_y: abyss.getRandomInt(-200, 200) / 100,
+			color: abyss.choose(['orange', 'red', 'blue', 'purple', 'gray', 'green']),
 			size: box_size
 		}));
 	}
@@ -74,8 +74,8 @@ myState.update = function(delta) {
 };
 
 // setup and run the game
-var myGame = new ghost.Game({
-	canvasId: 'ghostexample',
+var myGame = new abyss.Game({
+	canvasId: 'abyssexample',
 	state: myState
 });
 

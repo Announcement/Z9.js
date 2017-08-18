@@ -1,5 +1,5 @@
 /*
- *  Ghost.js - Example 02 - Bouncy Box
+ *  Abyss.js - Example 02 - Bouncy Box
  * 
  */
  
@@ -26,7 +26,7 @@ function BouncyBox(state, options) {
 }
 
 // create the main game state
-var myState = new ghost.State();
+var myState = new abyss.State();
 
 myState.init = function() {
 	// attach a custom object
@@ -50,8 +50,8 @@ myState.draw = function() {
 };
 
 // setup and run the game
-var myGame = new ghost.Game({
-	canvasId: 'ghostexample',
+var myGame = new abyss.Game({
+	canvasId: 'abyssexample',
 	state: myState,
 	background: '#000', // background fill color (optional)
 	fps: 60, // frames to draw per second (optional, default=60)

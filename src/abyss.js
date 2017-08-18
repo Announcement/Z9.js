@@ -1,36 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>JSDoc: Source: ghost.js</title>
-
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
-</head>
-
-<body>
-
-<div id="main">
-
-    <h1 class="page-title">Source: ghost.js</h1>
-
-    
-
-
-
-    
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/*
- *  Ghost.js
+/*
+ *  Abyss.js
  *  A humble HTML5 game engine
  *
- *  0.3.0
+ *  0.5.0
  *
  *  (c) 2017 Danijel Durakovic
  *  MIT License
@@ -40,8 +12,8 @@
 /*jshint browser:true */
 
 /**
- * @file Ghost.js
- * @version 0.3.0
+ * @file abyss.js
+ * @version 0.5.0
  * @author Danijel Durakovic
  * @copyright 2017
  */
@@ -49,10 +21,10 @@
 "use strict";
 
 /**
- * Ghost namespace
+ * Abyss.js namespace
  * @namespace
  */
-var ghost = {};
+var abyss = {};
 
 ////////////////////////////////////////////////////////////////////////////////////
 //
@@ -60,13 +32,12 @@ var ghost = {};
 //
 ////////////////////////////////////////////////////////////////////////////////////
 
-var G_NULL = void 0;
-var G_EMPTYF = function() {};
-
-var G_VIEW_DEFAULT = 0;
-var G_VIEW_SCALE_PRESERVERATIO = 1;
-var G_VIEW_SCALE_FULL = 2;
-var G_VIEW_EXPAND = 3;
+var NULL = void 0;
+var EMPTYF = function() {};
+var VIEW_DEFAULT = 0;
+var VIEW_SCALE_PRESERVERATIO = 1;
+var VIEW_SCALE_FULL = 2;
+var VIEW_EXPAND = 3;
 
 ////////////////////////////////////////////////////////////////////////////////////
 //
@@ -81,7 +52,7 @@ var G_VIEW_EXPAND = 3;
  *
  * @returns {object}
  */
-ghost.compose = function(/**/) {
+abyss.compose = function(/**/) {
 	// es6
 	if (Object.assign) {
 		return Object.assign.apply(null, arguments);
@@ -89,7 +60,7 @@ ghost.compose = function(/**/) {
 	// non-es6
 	var obj = arguments[0];
 	var n_args = arguments.length;
-	for (var i = 1; i &lt; n_args; ++i) {
+	for (var i = 1; i < n_args; ++i) {
 		var component = arguments[i];
 		if (!component)
 			continue;
@@ -111,8 +82,8 @@ ghost.compose = function(/**/) {
  *
  * @returns {number}
  */
-ghost.clamp = function(number, min, max) {
-	if (number &lt;= min)
+abyss.clamp = function(number, min, max) {
+	if (number <= min)
 		return min;
 	else if (number >= max)
 		return max;
@@ -127,7 +98,7 @@ ghost.clamp = function(number, min, max) {
  *
  * @returns {number}
  */
-ghost.getRandomInt = function(min, max) {
+abyss.getRandomInt = function(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
@@ -136,7 +107,7 @@ ghost.getRandomInt = function(min, max) {
  *
  * @param {array} list
  */
-ghost.shuffle = function(list) {
+abyss.shuffle = function(list) {
 	// fisher-yates shuffle
 	var i = list.length;
 	while (--i) {
@@ -154,7 +125,7 @@ ghost.shuffle = function(list) {
  *
  * @returns {number}
  */
-ghost.choose = function(list) {
+abyss.choose = function(list) {
 	if (list instanceof Array) {
 		return list[Math.floor(Math.random() * list.length)];
 	}
@@ -172,8 +143,8 @@ ghost.choose = function(list) {
  *
  * @returns {bool}
  */
-ghost.pointInRect = function(x, y, rx, ry, rw, rh) {
-	return x >= rx &amp;&amp; x &lt; rx + rw &amp;&amp; y >= ry &amp;&amp; y &lt; ry + rh;
+abyss.pointInRect = function(x, y, rx, ry, rw, rh) {
+	return x >= rx && x < rx + rw && y >= ry && y < ry + rh;
 };
 
 /**
@@ -182,10 +153,10 @@ ghost.pointInRect = function(x, y, rx, ry, rw, rh) {
  * @param {object} collection
  * @param {iterCallback} callback
  */
-ghost.iter = function(object, callback) {
+abyss.iter = function(object, callback) {
 	for (var key in object) {
 		var item = object[key];
-		if (object.hasOwnProperty(key) &amp;&amp; !(item instanceof Function)) {
+		if (object.hasOwnProperty(key) && !(item instanceof Function)) {
 			callback(key, item);
 		}
 	}
@@ -203,7 +174,7 @@ ghost.iter = function(object, callback) {
  * 
  * @returns {string}
  */
-ghost.getFilenameExtension = function(filename) {
+abyss.getFilenameExtension = function(filename) {
 	return filename.split('.').pop().toLowerCase();
 };
 
@@ -216,7 +187,7 @@ ghost.getFilenameExtension = function(filename) {
 /**
  * Constructs a Grid2D object.
  *
- * @class ghost.Grid2D
+ * @class abyss.Grid2D
  * @classdesc Represents a 2D game grid.
  *
  * @param {number} w - Grid width.
@@ -224,7 +195,7 @@ ghost.getFilenameExtension = function(filename) {
  * @param {number} [defaultValue] - Default value. This value will be used to populate
  *   the grid on clear.
  */
-ghost.Grid2D = function(w, h, defaultValue) {
+abyss.Grid2D = function(w, h, defaultValue) {
 	this.width = w;
 	this.height = h;
 	this.data = new Array(w * h);
@@ -234,7 +205,7 @@ ghost.Grid2D = function(w, h, defaultValue) {
 	 */
 	this.clear = function() {
 		var n = w * h;
-		for (var i = 0; i &lt; n; ++i) {
+		for (var i = 0; i < n; ++i) {
 			this.data[i] = defaultValue;
 		}
 	};
@@ -263,7 +234,7 @@ ghost.Grid2D = function(w, h, defaultValue) {
 /**
  * Constructs an Axis-aligned bounding box object.
  *
- * @class ghost.AABB
+ * @class abyss.AABB
  * @classdesc A simple AABB data structure.
  *
  * @param {number} x1
@@ -271,7 +242,7 @@ ghost.Grid2D = function(w, h, defaultValue) {
  * @param {number} x2
  * @param {number} y2
  */
-ghost.AABB = function(x1, y1, x2, y2) {
+abyss.AABB = function(x1, y1, x2, y2) {
 	this.x1 = x1 || 0;
 	this.y1 = y1 || 0;
 	this.x2 = x2 || 0;
@@ -279,31 +250,31 @@ ghost.AABB = function(x1, y1, x2, y2) {
 	/**
 	 * Check if two AABBs intersect.
 	 *
-	 * @param {ghost.AABB} aabb
+	 * @param {abyss.AABB} aabb
 	 *
 	 * @returns {bool}
 	 */
 	this.intersects = function(aabb) {
-		return (this.x2 > aabb.x1 &amp;&amp; this.y2 > aabb.y1 &amp;&amp;
-			this.x1 &lt; aabb.x2 &amp;&amp; this.y1 &lt; aabb.y2);
+		return (this.x2 > aabb.x1 && this.y2 > aabb.y1 &&
+			this.x1 < aabb.x2 && this.y1 < aabb.y2);
 	};
 };
 
 /**
  * Constructs a Timer object.
  *
- * @class ghost.Timer
+ * @class abyss.Timer
  * @classdesc A simple timer that ticks at regular intervals.
  *
  * @param {number} interval - Interval at which the timer ticks.
  */
-ghost.Timer = function(interval) {
+abyss.Timer = function(interval) {
 	interval = interval || 1;
 	var acc = 0;
 	/**
 	 * Indicates whether the timer has ticked or not.
 	 *
-	 * @name ghost.Timer#ticked
+	 * @name abyss.Timer#ticked
 	 * @type boolean
 	 * @default false
 	 */
@@ -343,22 +314,22 @@ ghost.Timer = function(interval) {
 /**
  * Constructs an AssetLoader object.
  *
- * @class ghost.AssetLoader
+ * @class abyss.AssetLoader
  * @classdesc Preloads and stores game assets.
  *
  * @param {object} options - Functions to override
  * @param {function} [options.done] - Triggers when all assets are done loading.
  * @param {progressCallback} [options.progress] - Triggers when a single asset is loaded.
  */
-ghost.AssetLoader = function(options) {
+abyss.AssetLoader = function(options) {
 	options = options || {};
 
 	var self = this;
 
 	var bank = {};
 
-	this.done = options.done || G_EMPTYF;
-	this.progress = options.progress || G_EMPTYF;
+	this.done = options.done || EMPTYF;
+	this.progress = options.progress || EMPTYF;
 
 	/**
 	 * A list of load handlers. These can be overriden by the user to create custom
@@ -377,7 +348,7 @@ ghost.AssetLoader = function(options) {
 	 *
 	 * @example
 	 * // Create a custom handler
-	 * var loader = new ghost.AssetLoader();
+	 * var loader = new abyss.AssetLoader();
 	 * loader.handler.customCategory = function(filename, ready) {
 	 *    // handler for customCategory
 	 *    // .. do something with filename ..
@@ -409,7 +380,7 @@ ghost.AssetLoader = function(options) {
 		xhr.open('get', filename, true);
 		xhr.send(null);
 		xhr.onreadystatechange = function() {
-			if (xhr.readyState === 4 &amp;&amp; xhr.status === 200) {
+			if (xhr.readyState === 4 && xhr.status === 200) {
 				var response = xhr.responseText;
 				var data = JSON.parse(response);
 				ready(data);
@@ -423,7 +394,7 @@ ghost.AssetLoader = function(options) {
 		xhr.open('get', filename, true);
 		xhr.send(null);
 		xhr.onreadystatechange = function() {
-			if (xhr.readyState === 4 &amp;&amp; xhr.status === 200) {
+			if (xhr.readyState === 4 && xhr.status === 200) {
 				var response = xhr.responseText;
 				var data = response;
 				ready(data);
@@ -453,7 +424,7 @@ ghost.AssetLoader = function(options) {
 	 *       mydata: 'mydata.json'
 	 *    }
 	 * };
-	 * var loader = new ghost.AssetLoader();
+	 * var loader = new abyss.AssetLoader();
 	 * loader.done = function() {
 	 *    console.log('All assets loaded and ready!');
 	 * };
@@ -464,9 +435,9 @@ ghost.AssetLoader = function(options) {
 		var n_loaded = 0;
 		var n_toload = 0;
 		var n_categories = 0;
-		ghost.iter(assetList, function(category, itemList) {
+		abyss.iter(assetList, function(category, itemList) {
 			n_categories++;
-			ghost.iter(itemList, function() {
+			abyss.iter(itemList, function() {
 				n_toload++;
 			});
 		});
@@ -477,10 +448,10 @@ ghost.AssetLoader = function(options) {
 				self.done();
 		}
 		// call appropriate handlers on items
-		ghost.iter(assetList, function(category, itemList) {
+		abyss.iter(assetList, function(category, itemList) {
 			var loadHandler = self.handler[category];
 			if (loadHandler instanceof Function) {
-				ghost.iter(itemList, function(key, filename) {
+				abyss.iter(itemList, function(key, filename) {
 					loadHandler(filename, function(asset) {
 						bank[key] = asset;
 						advanceLoad();
@@ -505,7 +476,7 @@ ghost.AssetLoader = function(options) {
 	 * @param {array} keys - A list of asset keys.
 	 *
 	 * @example
-	 * var loader = new ghost.AssetLoader();
+	 * var loader = new abyss.AssetLoader();
 	 * var assets = {
 	 *    graphics: {
 	 *       GFX_BACKGROUND: 'background.png',
@@ -527,7 +498,7 @@ ghost.AssetLoader = function(options) {
 	 * });
 	 */
 	this.acquire = function(object, keys) {
-		ghost.iter(keys, function(key, item) {
+		abyss.iter(keys, function(key, item) {
 			object[key] = bank[item];
 		});
 	};
@@ -547,12 +518,12 @@ ghost.AssetLoader = function(options) {
 /**
  * Constructs an Input object.
  *
- * @class ghost.Input
+ * @class abyss.Input
  * @classdesc Provides features for dealing with mouse and touch input.
  *
  * @param {object} game - Reference to Game object to capture input on.
  */
-ghost.Input = function(game) {
+abyss.Input = function(game) {
 	// input agents
 	var MOUSE = 0;
 	var TOUCH = 1;
@@ -564,17 +535,17 @@ ghost.Input = function(game) {
 	function translateCoords(e, agent) {
 		var ratio_x, ratio_y;
 		switch(game.getViewMode()) {
-			case G_VIEW_SCALE_PRESERVERATIO:
-				ratio_x = ratio_y = (element.offsetWidth &lt; elementOwner.offsetWidth) ?
+			case VIEW_SCALE_PRESERVERATIO:
+				ratio_x = ratio_y = (element.offsetWidth < elementOwner.offsetWidth) ?
 					element.height / elementOwner.offsetHeight :
 					element.width / elementOwner.offsetWidth;
 				break;
-			case G_VIEW_SCALE_FULL:
+			case VIEW_SCALE_FULL:
 				ratio_x = element.width / elementOwner.offsetWidth;
 				ratio_y = element.height / elementOwner.offsetHeight; 
 				break;
-			case G_VIEW_EXPAND:
-			case G_VIEW_DEFAULT:
+			case VIEW_EXPAND:
+			case VIEW_DEFAULT:
 				ratio_x = ratio_y = 1;
 				break;
 		}
@@ -591,14 +562,12 @@ ghost.Input = function(game) {
 	var cb = { press: [], move: [], release: [] };
 
 	// event handlers
-	function mouseHandler(callbackList, e, verifyButton) {
+	function mouseHandler(callbackList, e) {
 		if (e.preventDefault)
 			e.preventDefault();
-		if (verifyButton) {
-			var button = e.which || e.button;
-			if (button !== 1)
-				return;
-		}
+		var button = e.which || e.button;
+		if (button !== 1)
+			return;
 		// translate
 		var coords = translateCoords(e, MOUSE);
 		// dispatch
@@ -669,10 +638,10 @@ ghost.Input = function(game) {
 /**
  * Constructs a KeyInput object.
  *
- * @class ghost.KeyInput
+ * @class abyss.KeyInput
  * @classdesc Provides features for dealing with keyboard input.
  */
-ghost.KeyInput = function() {
+abyss.KeyInput = function() {
 	var self = this;
 	
 	var eventQueue = [];
@@ -739,9 +708,9 @@ ghost.KeyInput = function() {
 	 * @returns {bool}
 	 */
 	this.isAlphanumeric = function(keycode) {
-		return !(!(keycode > 47 &amp;&amp; keycode &lt; 58) &amp;&amp;
-			!(keycode > 64 &amp;&amp; keycode &lt; 91) &amp;&amp;
-			!(keycode > 96 &amp;&amp; keycode &lt; 123));
+		return !(!(keycode > 47 && keycode < 58) &&
+			!(keycode > 64 && keycode < 91) &&
+			!(keycode > 96 && keycode < 123));
 	};
 
 	/**
@@ -762,7 +731,7 @@ ghost.KeyInput = function() {
 	 */
 	this.isKeyDown = function(key) {
 		var keyState = keyBuffer[key];
-		return keyState !== undefined &amp;&amp; keyState;
+		return keyState !== undefined && keyState;
 	};
 
 	// keycodes
@@ -798,14 +767,14 @@ ghost.KeyInput = function() {
 /**
  * Constructs a Configuration object.
  *
- * @class ghost.Configuration
+ * @class abyss.Configuration
  * @classdesc Provides persistent storage through HTML5 local storage.
  *
  * @param {string} key - Local storage key.
  * @param {object} defaultConfiguration - Configuration to use when local storage key
  *     is not found.
  */
-ghost.Configuration = function(key, defaultConfiguration) {
+abyss.Configuration = function(key, defaultConfiguration) {
 	var self = this;
 	/**
 	 * Save configuration.
@@ -820,11 +789,11 @@ ghost.Configuration = function(key, defaultConfiguration) {
 		var localConfig = localStorage.getItem(key);
 		var config = (localConfig) ? JSON.parse(localConfig) : defaultConfiguration;
 		// clear all config beforehand
-		ghost.iter(self, function(key) {
+		abyss.iter(self, function(key) {
 			delete self[key];
 		});
 		// populate config
-		ghost.iter(config, function(key, item) {
+		abyss.iter(config, function(key, item) {
 			self[key] = item;
 		});
 	};
@@ -839,13 +808,13 @@ ghost.Configuration = function(key, defaultConfiguration) {
 /**
  * Constructs a Render object.
  *
- * @class ghost.Render
+ * @class abyss.Render
  * @classdesc Provides various drawing functions.
  *
  * @param {object} ctx - Rendering context.
  *
  */
-ghost.Render = function(ctx) {
+abyss.Render = function(ctx) {
 	/**
 	 * Sets the global alpha value.
 	 *
@@ -854,7 +823,7 @@ ghost.Render = function(ctx) {
 	this.setAlpha = function(alpha) {
 		if (alpha === undefined)
 			alpha = 1;
-		else if (alpha &lt;= 0)
+		else if (alpha <= 0)
 			alpha = 0;
 		else if (alpha >= 1)
 			alpha = 1;
@@ -962,7 +931,7 @@ ghost.Render = function(ctx) {
 		ctx.beginPath();
 		ctx.moveTo(points[0][0], points[0][1]);
 		var n_points = points.length;
-		for (var i = 1; i &lt; n_points; i++) {
+		for (var i = 1; i < n_points; i++) {
 			var p = points[i];
 			ctx.lineTo(p[0], p[1]);
 		}
@@ -1045,7 +1014,7 @@ ghost.Render = function(ctx) {
 	/**
 	 * Renders ASCII text with custom bitmap font.
 	 *
-	 * @param {ghost.Font} font - Bitmap font.
+	 * @param {abyss.Font} font - Bitmap font.
 	 * @param {string} text - Text to display.
 	 * @param {number} x - Text x position.
 	 * @param {number} y - Text y position.
@@ -1067,7 +1036,7 @@ ghost.Render = function(ctx) {
 		var i, ci;
 		if (align > 0) {
 			if (varw) {
-				for (i = 0; i &lt; len; i++) {
+				for (i = 0; i < len; i++) {
 					ci = text.charCodeAt(i) - 32;
 					acc += font.widths[ci] + font.spacing;
 				}
@@ -1079,7 +1048,7 @@ ghost.Render = function(ctx) {
 			}
 			offset = (align == 1) ? Math.floor(textw / 2) : textw;
 		}
-		for (i = 0; i &lt; len; i++) {
+		for (i = 0; i < len; i++) {
 			ci = text.charCodeAt(i) - 32;
 			var px;
 			if (varw) {
@@ -1107,7 +1076,7 @@ ghost.Render = function(ctx) {
 /**
  * Constructs a Font object.
  * 
- * @class ghost.Font
+ * @class abyss.Font
  * @classdesc Provides a bitmap font construct. This is a faster alternative to native
  *   canvas text rendering routines. It is more consistent since letters and spacings
  *   will always be rendered pixel perfect in all browsers, but it is also more
@@ -1122,7 +1091,7 @@ ghost.Render = function(ctx) {
  *   width characters.
  * @param {object|array} [options.widths] - Map or list of character widths.
  */
-ghost.Font = function(options) {
+abyss.Font = function(options) {
 	this.gfx = options.graphics;
 	this.width = options.size[0];
 	this.height = options.size[1];
@@ -1138,7 +1107,7 @@ ghost.Font = function(options) {
 		else {
 			// convert widths map to an array
 			this.widths = [];
-			for (var c = 32; c &lt;= 126; c++) {
+			for (var c = 32; c <= 126; c++) {
 				var key = String.fromCharCode(c);
 				var w = options.widths[key];
 				this.widths.push((w) ? w : this.width);
@@ -1156,7 +1125,7 @@ ghost.Font = function(options) {
 /**
  * Constructs a Surface object.
  *
- * @class ghost.Surface
+ * @class abyss.Surface
  * @classdesc An interface for drawing graphics. Can be used either to wrap an
  *     existing canvas element or create a virtual canvas element.
  *
@@ -1168,13 +1137,13 @@ ghost.Font = function(options) {
  * @example
  * // Create a new Surface on canvas with ID "myCanvas"
  * // width and height are inferred from the element
- * new ghost.Surface({ fromCanvas: 'myCanvas' });
+ * new abyss.Surface({ fromCanvas: 'myCanvas' });
  *
  * @example
  * // Create a new virtual Surface with size 200x100
- * new ghost.Surface({ width: 200, height: 100 });
+ * new abyss.Surface({ width: 200, height: 100 });
  */
-ghost.Surface = function(options) {
+abyss.Surface = function(options) {
 	options = options || {};
 
 	var canvas, ctx;
@@ -1202,10 +1171,10 @@ ghost.Surface = function(options) {
 	/**
 	 * An instance of Render.
 	 *
-	 * @name ghost.Surface#render
-	 * @type {ghost.Render}
+	 * @name abyss.Surface#render
+	 * @type {abyss.Render}
 	 */
-	this.render = new ghost.Render(ctx);
+	this.render = new abyss.Render(ctx);
 	
 	// clear methods
 	this.cm_clear = function() {
@@ -1221,10 +1190,10 @@ ghost.Surface = function(options) {
 	 * Clears the surface of anything that is drawn on it.
 	 * @name clear
 	 * @function
-	 * @memberof ghost.Surface
+	 * @memberof abyss.Surface
 	 * @instance
 	 */
-	this.clear = G_NULL;
+	this.clear = NULL;
 
 	/**
 	 * Sets Default clear method. When clear() is called, it will clear all
@@ -1287,7 +1256,7 @@ ghost.Surface = function(options) {
 /**
  * Constructs a State object.
  *
- * @class ghost.State
+ * @class abyss.State
  * @classdesc Implements a game state. Every game state comes with a reference to
  *   the global Surface object which is used for drawing.
  *
@@ -1298,7 +1267,7 @@ ghost.Surface = function(options) {
  * @param {function} [options.draw] - Triggers on state paint events.
  * @param {function} [options.update] - Triggers on state update events.
  */
-ghost.State = function(options) {
+abyss.State = function(options) {
 	options = options || {};
 	this._initialized = false;
 	this._initState = function(surface) {
@@ -1311,23 +1280,23 @@ ghost.State = function(options) {
 	/**
 	 * Global surface.
 	 *
-	 * @name ghost.State#surface
-	 * @type {ghost.Surface}
+	 * @name abyss.State#surface
+	 * @type {abyss.Surface}
 	 */
-	this.surface = G_NULL;
+	this.surface = NULL;
 	/**
 	 * Shorthand for state.surface.render.
 	 *
-	 * @name ghost.State#paint
-	 * @type {ghost.Render}
+	 * @name abyss.State#paint
+	 * @type {abyss.Render}
 	 */
-	this.paint = G_NULL;
+	this.paint = NULL;
 	// user functions
-	this.init   = options.init   || G_EMPTYF;
-	this.in     = options.in     || G_EMPTYF;
-	this.out    = options.out    || G_EMPTYF;
-	this.update = options.update || G_EMPTYF;
-	this.draw   = options.draw   || G_EMPTYF;
+	this.init   = options.init   || EMPTYF;
+	this.in     = options.in     || EMPTYF;
+	this.out    = options.out    || EMPTYF;
+	this.update = options.update || EMPTYF;
+	this.draw   = options.draw   || EMPTYF;
 };
 
 
@@ -1340,7 +1309,7 @@ ghost.State = function(options) {
 /**
  * Constructs a Game object.
  *
- * @class ghost.Game
+ * @class abyss.Game
  * @classdesc Initializes and runs the game.
  *
  * @param {object} options - Game options.
@@ -1357,11 +1326,11 @@ ghost.State = function(options) {
  *   first time. You can safely omit this argument if your states can load independently.
  *   Use initStates() to initialize states manually.
  */
-ghost.Game = function(options) {
+abyss.Game = function(options) {
 	var self = this;
 
-	var state = G_NULL;
-	var surface = G_NULL;
+	var state = NULL;
+	var surface = NULL;
 
 	// references to canvas and canvas parent elements
 	var canvas;
@@ -1394,9 +1363,9 @@ ghost.Game = function(options) {
 	//
 	// view handling
 	//
-	var view_mode = G_VIEW_DEFAULT;
-	var view_updatehandler = G_NULL;
-	var view_debounce_timeout = G_NULL;
+	var view_mode = VIEW_DEFAULT;
+	var view_updatehandler = NULL;
+	var view_debounce_timeout = NULL;
 	var view_debounce_delay = 20;
 	var viewHandlers = {
 		init: {},
@@ -1404,7 +1373,7 @@ ghost.Game = function(options) {
 	};
 
 	// default view handler
-	viewHandlers.init[G_VIEW_DEFAULT] = function() {
+	viewHandlers.init[VIEW_DEFAULT] = function() {
 		surface.resetSize();
 		canvas.style.width = surface.width + 'px';
 		canvas.style.height = surface.height + 'px';
@@ -1414,19 +1383,19 @@ ghost.Game = function(options) {
 		canvas.style.bottom = '0';
 		canvas.style.margin = 'auto';
 	};
-	viewHandlers.update[G_VIEW_DEFAULT] = G_NULL;
+	viewHandlers.update[VIEW_DEFAULT] = NULL;
 
 	// scale-preserveratio handlers
-	viewHandlers.init[G_VIEW_SCALE_PRESERVERATIO] = function() {
+	viewHandlers.init[VIEW_SCALE_PRESERVERATIO] = function() {
 		surface.resetSize();
-		viewHandlers.update[G_VIEW_SCALE_PRESERVERATIO]();
+		viewHandlers.update[VIEW_SCALE_PRESERVERATIO]();
 		canvas.style.top = '0';
 		canvas.style.left = '0';
 		canvas.style.right = '0';
 		canvas.style.bottom = '0';
 		canvas.style.margin = 'auto';
 	};
-	viewHandlers.update[G_VIEW_SCALE_PRESERVERATIO] = function() {
+	viewHandlers.update[VIEW_SCALE_PRESERVERATIO] = function() {
 		var cw = surface.width;
 		var ch = surface.height;
 		var dw = canvasOwner.offsetWidth;
@@ -1447,22 +1416,22 @@ ghost.Game = function(options) {
 	};
 	
 	// scale-full handlers
-	viewHandlers.init[G_VIEW_SCALE_FULL] = function() {
+	viewHandlers.init[VIEW_SCALE_FULL] = function() {
 		surface.resetSize();
 		canvas.style.width = '100%';
 		canvas.style.height = '100%';
 		canvas.style.top = '0';
 		canvas.style.left = '0';
 	};
-	viewHandlers.update[G_VIEW_SCALE_FULL] = G_NULL;
+	viewHandlers.update[VIEW_SCALE_FULL] = NULL;
 	
 	// expand handlers
-	viewHandlers.init[G_VIEW_EXPAND] = function() {
-		viewHandlers.update[G_VIEW_EXPAND]();
+	viewHandlers.init[VIEW_EXPAND] = function() {
+		viewHandlers.update[VIEW_EXPAND]();
 		canvas.style.top = '0';
 		canvas.style.left = '0';
 	};
-	viewHandlers.update[G_VIEW_EXPAND] = function() {
+	viewHandlers.update[VIEW_EXPAND] = function() {
 		surface.resize(canvasOwner.offsetWidth, canvasOwner.offsetHeight);
 	};
 
@@ -1474,7 +1443,7 @@ ghost.Game = function(options) {
 	/**
 	 * Changes active game state.
 	 *
-	 * @param {ghost.State} next - State to switch to.
+	 * @param {abyss.State} next - State to switch to.
 	 */
 	this.setState = function(next) {
 		if (state) {
@@ -1491,7 +1460,7 @@ ghost.Game = function(options) {
 	/**
 	 * Retreives active game state.
 	 *
-	 * @returns {ghost.State}
+	 * @returns {abyss.State}
 	 */
 	this.getState = function() {
 		return state;
@@ -1500,7 +1469,7 @@ ghost.Game = function(options) {
 	/**
 	 * Retreives the main game surface.
 	 * 
-	 * @returns {ghost.Surface}
+	 * @returns {abyss.Surface}
 	 */
 	this.getSurface = function() {
 		return surface;
@@ -1514,7 +1483,7 @@ ghost.Game = function(options) {
 	 */
 	this.initStates = function(states) {
 		var n_states = states.length;
-		for (var i = 0; i &lt; n_states; i++) {
+		for (var i = 0; i < n_states; i++) {
 			var game_state = states[i];
 			if (!game_state._initialized) {
 				game_state._initState(surface);
@@ -1530,7 +1499,7 @@ ghost.Game = function(options) {
 		// initialize game states on startup if provided
 		if (options.gameStates instanceof Array) {
 			var n_states = options.gameStates.length;
-			for (var i = 0; i &lt; n_states; i++) {
+			for (var i = 0; i < n_states; i++) {
 				var game_state = options.gameStates[i];
 				game_state._initState(surface);
 				game_state.init();	
@@ -1562,8 +1531,8 @@ ghost.Game = function(options) {
 	this.setViewMode = function(mode) {
 		// remove the update handler and the resize event
 		if (view_updatehandler) {
-			view_updatehandler = G_NULL;
-			//window.onresize = G_NULL;
+			view_updatehandler = NULL;
+			//window.onresize = NULL;
 			window.removeEventListener('resize', pollViewUpdate);
 		}
 		// setup view mode
@@ -1571,17 +1540,17 @@ ghost.Game = function(options) {
 			switch (mode.trim().toLowerCase()) {
 				case 'scale-preserveratio':
 				case 'scale_preserveratio':
-					view_mode = G_VIEW_SCALE_PRESERVERATIO;
+					view_mode = VIEW_SCALE_PRESERVERATIO;
 					break;
 				case 'scale-full':
 				case 'scale_full':
-					view_mode = G_VIEW_SCALE_FULL;
+					view_mode = VIEW_SCALE_FULL;
 					break;
 				case 'expand':
-					view_mode = G_VIEW_EXPAND;
+					view_mode = VIEW_EXPAND;
 					break;
 				default:
-					view_mode = G_VIEW_DEFAULT;
+					view_mode = VIEW_DEFAULT;
 					break;
 			}
 		}
@@ -1628,31 +1597,8 @@ ghost.Game = function(options) {
 	canvasOwner = canvas.parentElement;
 
 	// create the surface object
-	surface = new ghost.Surface({ fromCanvas: canvas });
+	surface = new abyss.Surface({ fromCanvas: canvas });
 	if (options.background) {
 		surface.setFillClearMethod(options.background);
 	}
 };
-</code></pre>
-        </article>
-    </section>
-
-
-
-
-</div>
-
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ghost.AABB.html">AABB</a></li><li><a href="ghost.AssetLoader.html">AssetLoader</a></li><li><a href="ghost.Configuration.html">Configuration</a></li><li><a href="ghost.Font.html">Font</a></li><li><a href="ghost.Game.html">Game</a></li><li><a href="ghost.Grid2D.html">Grid2D</a></li><li><a href="ghost.Input.html">Input</a></li><li><a href="ghost.KeyInput.html">KeyInput</a></li><li><a href="ghost.Render.html">Render</a></li><li><a href="ghost.State.html">State</a></li><li><a href="ghost.Surface.html">Surface</a></li><li><a href="ghost.Timer.html">Timer</a></li></ul><h3>Namespaces</h3><ul><li><a href="ghost.html">ghost</a></li></ul><h3><a href="global.html">Global</a></h3>
-</nav>
-
-<br class="clear">
-
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Jul 24 2017 19:28:33 GMT+0200 (Central Europe Daylight Time)
-</footer>
-
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
-</body>
-</html>

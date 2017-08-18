@@ -1,18 +1,18 @@
 /*
- *  Ghost.js - Example 08 - Key Input
+ *  Abyss.js - Example 08 - Key Input
  * 
  */
 
 // create a key input handler
-var keyInputHandler = new ghost.KeyInput();
+var keyInputHandler = new abyss.KeyInput();
 
 // create the main state
-var myState = new ghost.State();
+var myState = new abyss.State();
 
 // called when state initializes
 myState.init = function() {
 	this.strBuff = '';
-	this.blinkTimer = new ghost.Timer(30);
+	this.blinkTimer = new abyss.Timer(30);
 	this.showCaret = false;
 	this.keyStates = {
 		up: false,
@@ -106,8 +106,8 @@ myState.update = function(dt) {
 };
 
 // setup and run the game
-var myGame = new ghost.Game({
-	canvasId: 'ghostexample', // canvas element to initialize the game on
+var myGame = new abyss.Game({
+	canvasId: 'abyssexample', // canvas element to initialize the game on
 	state: myState // starting game state
 });
 

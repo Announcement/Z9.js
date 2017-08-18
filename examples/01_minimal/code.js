@@ -1,10 +1,10 @@
 /*
- *  Ghost.js - Example 01 - Minimal
+ *  Abyss.js - Example 01 - Minimal
  * 
  */
 
 // create a game state
-var myState = new ghost.State();
+var myState = new abyss.State();
 
 // called when state initializes
 myState.init = function() {
@@ -22,8 +22,8 @@ myState.draw = function() {
 };
 
 // setup game
-var myGame = new ghost.Game({
-	canvasId: 'ghostexample', // canvas element to initialize the game on
+var myGame = new abyss.Game({
+	canvasId: 'abyssexample', // canvas element to initialize the game on
 	state: myState, // starting game state
 	simpleLoop: true // use a simple game loop that only draws and doesn't call update
 });

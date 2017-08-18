@@ -1,5 +1,5 @@
 /*
- *  Ghost.js - Example 03 - Graphics
+ *  Abyss.js - Example 03 - Graphics
  * 
  */
 
@@ -11,7 +11,7 @@ var myAssets = {
 };
 
 // asset loader
-var myLoader = new ghost.AssetLoader();
+var myLoader = new abyss.AssetLoader();
 
 // called when loader finishes loading assets
 myLoader.done = function() {
@@ -19,7 +19,7 @@ myLoader.done = function() {
 };
  
 // create the main state
-var myState = new ghost.State();
+var myState = new abyss.State();
 
 // called when state initializes
 myState.init = function() {
@@ -28,12 +28,12 @@ myState.init = function() {
 
 // draw the sprite
 myState.draw = function() {
-	this.paint.graphics(this.sprite, 160, 110);
+	this.paint.graphics(this.sprite, 140, 90);
 };
 
 // setup and run the game
-var myGame = new ghost.Game({
-	canvasId: 'ghostexample', // canvas element to initialize the game on
+var myGame = new abyss.Game({
+	canvasId: 'abyssexample', // canvas element to initialize the game on
 	state: myState, // starting game state
 	simpleLoop: true // use a simple game loop that only draws and doesn't update
 });

@@ -10,7 +10,7 @@ h2 {
 	font-family: sans-serif;
 	font-size: 20px;
 }
-#ghostcontainer {
+#abysscontainer {
 	position: absolute;
 	background-color: #ddd;
 	width: 100%;
@@ -21,7 +21,7 @@ h2 {
 	bottom: 0;
 	margin: auto;
 }
-#ghostexample {
+#abyssexample {
 	position: absolute;
 	background-color: #fff;
 	left: 0;

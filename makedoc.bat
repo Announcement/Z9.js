@@ -1,1 +1,1 @@
-@jsdoc -d doc src\ghost.js
+@jsdoc -d doc src\abyss.js

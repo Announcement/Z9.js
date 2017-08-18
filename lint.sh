@@ -1,2 +1,2 @@
 #!/bin/bash
-jshint src/ghost.js
+jshint src/abyss.js

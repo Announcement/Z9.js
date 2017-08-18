@@ -1,5 +1,5 @@
 /*
- *  Ghost.js - Example 06 - Text
+ *  Abyss.js - Example 06 - Text
  * 
  */
 
@@ -12,7 +12,7 @@ var myAssets = {
 };
 
 // asset loader
-var myLoader = new ghost.AssetLoader();
+var myLoader = new abyss.AssetLoader();
 
 // called when loader finishes loading assets
 myLoader.done = function() {
@@ -20,11 +20,11 @@ myLoader.done = function() {
 };
 
 // create the main state
-var myState = new ghost.State();
+var myState = new abyss.State();
 
 // called when state initializes
 myState.init = function() {
-	this.font = new ghost.Font({
+	this.font = new abyss.Font({
 		graphics: myLoader.get('font_gfx'),
 		size: [16, 16]
 	});
@@ -39,14 +39,14 @@ myState.draw = function() {
 	this.paint.bmptext(this.font, "Symbols!?@#$%^&*()[];'", 20, 110);
 	this.paint.bmptext(this.font, "\"{},.<>:-=+\\/~|`", 20, 140);
 	this.paint.text('Non-bitmap text', 20, 180);
-	this.paint.text('Boring piece of text no one will probably read', 20, 202, 'red');
+	this.paint.text('Colored text', 20, 202, 'red');
 	this.paint.text('Centered text with custom font', 200, 230, 'purple', 'center', '20px sans-serif');
-	this.paint.text('Right aligned text', 380, 270, '#000', 'right', '11px verdana');
+	this.paint.text('Right aligned text with custom font', 380, 270, '#000', 'right', '11px verdana');
 };
 
 // setup and run the game
-var myGame = new ghost.Game({
-	canvasId: 'ghostexample', // canvas element to initialize the game on
+var myGame = new abyss.Game({
+	canvasId: 'abyssexample', // canvas element to initialize the game on
 	state: myState, // starting game state
 	simpleLoop: true // use a simple game loop that only draws and doesn't call update
 });
