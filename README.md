@@ -1,6 +1,4 @@
-Abyss.js is a HTML5 game development toolkit intended primarily for basic 2D game development.
-
-![Mascot](mascot.png)
+Abyss.js is an HTML5 game development toolkit intended primarily for basic 2D game development.
 
 Version 0.5.0 - use at your own peril.
 
