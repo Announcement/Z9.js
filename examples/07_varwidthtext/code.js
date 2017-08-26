@@ -1,5 +1,5 @@
 /*
- *  Abyss.js - Example 07 - Variable Width Text
+ *  Z9.js - Example 07 - Variable Width Text
  * 
  */
 
@@ -12,7 +12,7 @@ var myAssets = {
 };
 
 // asset loader
-var myLoader = new abyss.AssetLoader();
+var myLoader = new Z9.AssetLoader();
 
 // called when loader finishes loading assets
 myLoader.done = function() {
@@ -20,14 +20,14 @@ myLoader.done = function() {
 };
 
 // create the main state
-var myState = new abyss.State();
+var myState = new Z9.State();
 
 // called when state initializes
 myState.init = function() {
 	// create a non-monospaced font by specifying widths for characters
 	// it is safe to skip characters that have the same width as the
 	// default character width
-	this.font = new abyss.Font({
+	this.font = new Z9.Font({
 		graphics: myLoader.get('font_gfx'), // font graphics
 		size: [12, 18], // default character width and height
 		spacing: 3, // font spacing
@@ -144,8 +144,8 @@ myState.draw = function() {
 };
 
 // setup and run the game
-var myGame = new abyss.Game({
-	canvasId: 'abyssexample', // canvas element to initialize the game on
+var myGame = new Z9.Game({
+	canvasId: 'Z9example', // canvas element to initialize the game on
 	state: myState, // starting game state
 	background: '#000', // set background fill color
 	simpleLoop: true // use a simple game loop that only draws and doesn't call update

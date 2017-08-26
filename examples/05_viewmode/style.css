@@ -26,13 +26,13 @@ body {
 	margin: 0 auto;
 	font-family: sans-serif;
 }
-#abysscontainer {
+#Z9container {
 	position: absolute;
 	background-color: #ddd;
 	bottom: 0;
 	width: 100%;
 	height: 80%;
 }
-#abyssexample {
+#Z9example {
 	background-color: #fff;
 }

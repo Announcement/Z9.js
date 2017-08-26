@@ -1,33 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>JSDoc: Source: abyss.js</title>
-
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
-</head>
-
-<body>
-
-<div id="main">
-
-    <h1 class="page-title">Source: abyss.js</h1>
-
-    
-
-
-
-    
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/*
- *  Abyss.js
+/*
+ *  Z9.js
  *  A humble HTML5 game engine
  *
  *  0.5.0
@@ -40,7 +12,7 @@
 /*jshint browser:true */
 
 /**
- * @file abyss.js
+ * @file Z9.js
  * @version 0.5.0
  * @author Danijel Durakovic
  * @copyright 2017
@@ -49,10 +21,10 @@
 "use strict";
 
 /**
- * Abyss.js namespace
+ * Z9.js namespace
  * @namespace
  */
-var abyss = {};
+var Z9 = {};
 
 ////////////////////////////////////////////////////////////////////////////////////
 //
@@ -60,12 +32,12 @@ var abyss = {};
 //
 ////////////////////////////////////////////////////////////////////////////////////
 
-var NULL = void 0;
-var EMPTYF = function() {};
-var VIEW_DEFAULT = 0;
-var VIEW_SCALE_PRESERVERATIO = 1;
-var VIEW_SCALE_FULL = 2;
-var VIEW_EXPAND = 3;
+var Z_NULL = void 0;
+var Z_EMPTYF = function() {};
+var Z_VIEW_DEFAULT = 0;
+var Z_VIEW_SCALE_PRESERVERATIO = 1;
+var Z_VIEW_SCALE_FULL = 2;
+var Z_VIEW_EXPAND = 3;
 
 ////////////////////////////////////////////////////////////////////////////////////
 //
@@ -80,7 +52,7 @@ var VIEW_EXPAND = 3;
  *
  * @returns {object}
  */
-abyss.compose = function(/**/) {
+Z9.compose = function(/**/) {
 	// es6
 	if (Object.assign) {
 		return Object.assign.apply(null, arguments);
@@ -88,7 +60,7 @@ abyss.compose = function(/**/) {
 	// non-es6
 	var obj = arguments[0];
 	var n_args = arguments.length;
-	for (var i = 1; i &lt; n_args; ++i) {
+	for (var i = 1; i < n_args; ++i) {
 		var component = arguments[i];
 		if (!component)
 			continue;
@@ -110,8 +82,8 @@ abyss.compose = function(/**/) {
  *
  * @returns {number}
  */
-abyss.clamp = function(number, min, max) {
-	if (number &lt;= min)
+Z9.clamp = function(number, min, max) {
+	if (number <= min)
 		return min;
 	else if (number >= max)
 		return max;
@@ -126,7 +98,7 @@ abyss.clamp = function(number, min, max) {
  *
  * @returns {number}
  */
-abyss.getRandomInt = function(min, max) {
+Z9.getRandomInt = function(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
@@ -135,7 +107,7 @@ abyss.getRandomInt = function(min, max) {
  *
  * @param {array} list
  */
-abyss.shuffle = function(list) {
+Z9.shuffle = function(list) {
 	// fisher-yates shuffle
 	var i = list.length;
 	while (--i) {
@@ -153,7 +125,7 @@ abyss.shuffle = function(list) {
  *
  * @returns {number}
  */
-abyss.choose = function(list) {
+Z9.choose = function(list) {
 	if (list instanceof Array) {
 		return list[Math.floor(Math.random() * list.length)];
 	}
@@ -171,8 +143,8 @@ abyss.choose = function(list) {
  *
  * @returns {bool}
  */
-abyss.pointInRect = function(x, y, rx, ry, rw, rh) {
-	return x >= rx &amp;&amp; x &lt; rx + rw &amp;&amp; y >= ry &amp;&amp; y &lt; ry + rh;
+Z9.pointInRect = function(x, y, rx, ry, rw, rh) {
+	return x >= rx && x < rx + rw && y >= ry && y < ry + rh;
 };
 
 /**
@@ -181,10 +153,10 @@ abyss.pointInRect = function(x, y, rx, ry, rw, rh) {
  * @param {object} collection
  * @param {iterCallback} callback
  */
-abyss.iter = function(object, callback) {
+Z9.iter = function(object, callback) {
 	for (var key in object) {
 		var item = object[key];
-		if (object.hasOwnProperty(key) &amp;&amp; !(item instanceof Function)) {
+		if (object.hasOwnProperty(key) && !(item instanceof Function)) {
 			callback(key, item);
 		}
 	}
@@ -202,7 +174,7 @@ abyss.iter = function(object, callback) {
  * 
  * @returns {string}
  */
-abyss.getFilenameExtension = function(filename) {
+Z9.getFilenameExtension = function(filename) {
 	return filename.split('.').pop().toLowerCase();
 };
 
@@ -215,7 +187,7 @@ abyss.getFilenameExtension = function(filename) {
 /**
  * Constructs a Grid2D object.
  *
- * @class abyss.Grid2D
+ * @class Z9.Grid2D
  * @classdesc Represents a 2D game grid.
  *
  * @param {number} w - Grid width.
@@ -223,7 +195,7 @@ abyss.getFilenameExtension = function(filename) {
  * @param {number} [defaultValue] - Default value. This value will be used to populate
  *   the grid on clear.
  */
-abyss.Grid2D = function(w, h, defaultValue) {
+Z9.Grid2D = function(w, h, defaultValue) {
 	this.width = w;
 	this.height = h;
 	this.data = new Array(w * h);
@@ -233,7 +205,7 @@ abyss.Grid2D = function(w, h, defaultValue) {
 	 */
 	this.clear = function() {
 		var n = w * h;
-		for (var i = 0; i &lt; n; ++i) {
+		for (var i = 0; i < n; ++i) {
 			this.data[i] = defaultValue;
 		}
 	};
@@ -262,7 +234,7 @@ abyss.Grid2D = function(w, h, defaultValue) {
 /**
  * Constructs an Axis-aligned bounding box object.
  *
- * @class abyss.AABB
+ * @class Z9.AABB
  * @classdesc A simple AABB data structure.
  *
  * @param {number} x1
@@ -270,7 +242,7 @@ abyss.Grid2D = function(w, h, defaultValue) {
  * @param {number} x2
  * @param {number} y2
  */
-abyss.AABB = function(x1, y1, x2, y2) {
+Z9.AABB = function(x1, y1, x2, y2) {
 	this.x1 = x1 || 0;
 	this.y1 = y1 || 0;
 	this.x2 = x2 || 0;
@@ -278,31 +250,31 @@ abyss.AABB = function(x1, y1, x2, y2) {
 	/**
 	 * Check if two AABBs intersect.
 	 *
-	 * @param {abyss.AABB} aabb
+	 * @param {Z9.AABB} aabb
 	 *
 	 * @returns {bool}
 	 */
 	this.intersects = function(aabb) {
-		return (this.x2 > aabb.x1 &amp;&amp; this.y2 > aabb.y1 &amp;&amp;
-			this.x1 &lt; aabb.x2 &amp;&amp; this.y1 &lt; aabb.y2);
+		return (this.x2 > aabb.x1 && this.y2 > aabb.y1 &&
+			this.x1 < aabb.x2 && this.y1 < aabb.y2);
 	};
 };
 
 /**
  * Constructs a Timer object.
  *
- * @class abyss.Timer
+ * @class Z9.Timer
  * @classdesc A simple timer that ticks at regular intervals.
  *
  * @param {number} interval - Interval at which the timer ticks.
  */
-abyss.Timer = function(interval) {
+Z9.Timer = function(interval) {
 	interval = interval || 1;
 	var acc = 0;
 	/**
 	 * Indicates whether the timer has ticked or not.
 	 *
-	 * @name abyss.Timer#ticked
+	 * @name Z9.Timer#ticked
 	 * @type boolean
 	 * @default false
 	 */
@@ -342,22 +314,22 @@ abyss.Timer = function(interval) {
 /**
  * Constructs an AssetLoader object.
  *
- * @class abyss.AssetLoader
+ * @class Z9.AssetLoader
  * @classdesc Preloads and stores game assets.
  *
  * @param {object} options - Functions to override
  * @param {function} [options.done] - Triggers when all assets are done loading.
  * @param {progressCallback} [options.progress] - Triggers when a single asset is loaded.
  */
-abyss.AssetLoader = function(options) {
+Z9.AssetLoader = function(options) {
 	options = options || {};
 
 	var self = this;
 
 	var bank = {};
 
-	this.done = options.done || EMPTYF;
-	this.progress = options.progress || EMPTYF;
+	this.done = options.done || Z_EMPTYF;
+	this.progress = options.progress || Z_EMPTYF;
 
 	/**
 	 * A list of load handlers. These can be overriden by the user to create custom
@@ -376,7 +348,7 @@ abyss.AssetLoader = function(options) {
 	 *
 	 * @example
 	 * // Create a custom handler
-	 * var loader = new abyss.AssetLoader();
+	 * var loader = new Z9.AssetLoader();
 	 * loader.handler.customCategory = function(filename, ready) {
 	 *    // handler for customCategory
 	 *    // .. do something with filename ..
@@ -408,7 +380,7 @@ abyss.AssetLoader = function(options) {
 		xhr.open('get', filename, true);
 		xhr.send(null);
 		xhr.onreadystatechange = function() {
-			if (xhr.readyState === 4 &amp;&amp; xhr.status === 200) {
+			if (xhr.readyState === 4 && xhr.status === 200) {
 				var response = xhr.responseText;
 				var data = JSON.parse(response);
 				ready(data);
@@ -422,7 +394,7 @@ abyss.AssetLoader = function(options) {
 		xhr.open('get', filename, true);
 		xhr.send(null);
 		xhr.onreadystatechange = function() {
-			if (xhr.readyState === 4 &amp;&amp; xhr.status === 200) {
+			if (xhr.readyState === 4 && xhr.status === 200) {
 				var response = xhr.responseText;
 				var data = response;
 				ready(data);
@@ -452,7 +424,7 @@ abyss.AssetLoader = function(options) {
 	 *       mydata: 'mydata.json'
 	 *    }
 	 * };
-	 * var loader = new abyss.AssetLoader();
+	 * var loader = new Z9.AssetLoader();
 	 * loader.done = function() {
 	 *    console.log('All assets loaded and ready!');
 	 * };
@@ -463,9 +435,9 @@ abyss.AssetLoader = function(options) {
 		var n_loaded = 0;
 		var n_toload = 0;
 		var n_categories = 0;
-		abyss.iter(assetList, function(category, itemList) {
+		Z9.iter(assetList, function(category, itemList) {
 			n_categories++;
-			abyss.iter(itemList, function() {
+			Z9.iter(itemList, function() {
 				n_toload++;
 			});
 		});
@@ -476,10 +448,10 @@ abyss.AssetLoader = function(options) {
 				self.done();
 		}
 		// call appropriate handlers on items
-		abyss.iter(assetList, function(category, itemList) {
+		Z9.iter(assetList, function(category, itemList) {
 			var loadHandler = self.handler[category];
 			if (loadHandler instanceof Function) {
-				abyss.iter(itemList, function(key, filename) {
+				Z9.iter(itemList, function(key, filename) {
 					loadHandler(filename, function(asset) {
 						bank[key] = asset;
 						advanceLoad();
@@ -504,7 +476,7 @@ abyss.AssetLoader = function(options) {
 	 * @param {array} keys - A list of asset keys.
 	 *
 	 * @example
-	 * var loader = new abyss.AssetLoader();
+	 * var loader = new Z9.AssetLoader();
 	 * var assets = {
 	 *    graphics: {
 	 *       GFX_BACKGROUND: 'background.png',
@@ -526,7 +498,7 @@ abyss.AssetLoader = function(options) {
 	 * });
 	 */
 	this.acquire = function(object, keys) {
-		abyss.iter(keys, function(key, item) {
+		Z9.iter(keys, function(key, item) {
 			object[key] = bank[item];
 		});
 	};
@@ -546,12 +518,12 @@ abyss.AssetLoader = function(options) {
 /**
  * Constructs an Input object.
  *
- * @class abyss.Input
+ * @class Z9.Input
  * @classdesc Provides features for dealing with mouse and touch input.
  *
  * @param {object} game - Reference to Game object to capture input on.
  */
-abyss.Input = function(game) {
+Z9.Input = function(game) {
 	// input agents
 	var MOUSE = 0;
 	var TOUCH = 1;
@@ -563,17 +535,17 @@ abyss.Input = function(game) {
 	function translateCoords(e, agent) {
 		var ratio_x, ratio_y;
 		switch(game.getViewMode()) {
-			case VIEW_SCALE_PRESERVERATIO:
-				ratio_x = ratio_y = (element.offsetWidth &lt; elementOwner.offsetWidth) ?
+			case Z_VIEW_SCALE_PRESERVERATIO:
+				ratio_x = ratio_y = (element.offsetWidth < elementOwner.offsetWidth) ?
 					element.height / elementOwner.offsetHeight :
 					element.width / elementOwner.offsetWidth;
 				break;
-			case VIEW_SCALE_FULL:
+			case Z_VIEW_SCALE_FULL:
 				ratio_x = element.width / elementOwner.offsetWidth;
 				ratio_y = element.height / elementOwner.offsetHeight; 
 				break;
-			case VIEW_EXPAND:
-			case VIEW_DEFAULT:
+			case Z_VIEW_EXPAND:
+			case Z_VIEW_DEFAULT:
 				ratio_x = ratio_y = 1;
 				break;
 		}
@@ -666,10 +638,10 @@ abyss.Input = function(game) {
 /**
  * Constructs a KeyInput object.
  *
- * @class abyss.KeyInput
+ * @class Z9.KeyInput
  * @classdesc Provides features for dealing with keyboard input.
  */
-abyss.KeyInput = function() {
+Z9.KeyInput = function() {
 	var self = this;
 	
 	var eventQueue = [];
@@ -736,9 +708,9 @@ abyss.KeyInput = function() {
 	 * @returns {bool}
 	 */
 	this.isAlphanumeric = function(keycode) {
-		return !(!(keycode > 47 &amp;&amp; keycode &lt; 58) &amp;&amp;
-			!(keycode > 64 &amp;&amp; keycode &lt; 91) &amp;&amp;
-			!(keycode > 96 &amp;&amp; keycode &lt; 123));
+		return !(!(keycode > 47 && keycode < 58) &&
+			!(keycode > 64 && keycode < 91) &&
+			!(keycode > 96 && keycode < 123));
 	};
 
 	/**
@@ -759,7 +731,7 @@ abyss.KeyInput = function() {
 	 */
 	this.isKeyDown = function(key) {
 		var keyState = keyBuffer[key];
-		return keyState !== undefined &amp;&amp; keyState;
+		return keyState !== undefined && keyState;
 	};
 
 	// keycodes
@@ -795,14 +767,14 @@ abyss.KeyInput = function() {
 /**
  * Constructs a Configuration object.
  *
- * @class abyss.Configuration
+ * @class Z9.Configuration
  * @classdesc Provides persistent storage through HTML5 local storage.
  *
  * @param {string} key - Local storage key.
  * @param {object} defaultConfiguration - Configuration to use when local storage key
  *     is not found.
  */
-abyss.Configuration = function(key, defaultConfiguration) {
+Z9.Configuration = function(key, defaultConfiguration) {
 	var self = this;
 	/**
 	 * Save configuration.
@@ -817,11 +789,11 @@ abyss.Configuration = function(key, defaultConfiguration) {
 		var localConfig = localStorage.getItem(key);
 		var config = (localConfig) ? JSON.parse(localConfig) : defaultConfiguration;
 		// clear all config beforehand
-		abyss.iter(self, function(key) {
+		Z9.iter(self, function(key) {
 			delete self[key];
 		});
 		// populate config
-		abyss.iter(config, function(key, item) {
+		Z9.iter(config, function(key, item) {
 			self[key] = item;
 		});
 	};
@@ -836,13 +808,13 @@ abyss.Configuration = function(key, defaultConfiguration) {
 /**
  * Constructs a Render object.
  *
- * @class abyss.Render
+ * @class Z9.Render
  * @classdesc Provides various drawing functions.
  *
  * @param {object} ctx - Rendering context.
  *
  */
-abyss.Render = function(ctx) {
+Z9.Render = function(ctx) {
 	/**
 	 * Sets the global alpha value.
 	 *
@@ -851,7 +823,7 @@ abyss.Render = function(ctx) {
 	this.setAlpha = function(alpha) {
 		if (alpha === undefined)
 			alpha = 1;
-		else if (alpha &lt;= 0)
+		else if (alpha <= 0)
 			alpha = 0;
 		else if (alpha >= 1)
 			alpha = 1;
@@ -959,7 +931,7 @@ abyss.Render = function(ctx) {
 		ctx.beginPath();
 		ctx.moveTo(points[0][0], points[0][1]);
 		var n_points = points.length;
-		for (var i = 1; i &lt; n_points; i++) {
+		for (var i = 1; i < n_points; i++) {
 			var p = points[i];
 			ctx.lineTo(p[0], p[1]);
 		}
@@ -1042,7 +1014,7 @@ abyss.Render = function(ctx) {
 	/**
 	 * Renders ASCII text with custom bitmap font.
 	 *
-	 * @param {abyss.Font} font - Bitmap font.
+	 * @param {Z9.Font} font - Bitmap font.
 	 * @param {string} text - Text to display.
 	 * @param {number} x - Text x position.
 	 * @param {number} y - Text y position.
@@ -1064,7 +1036,7 @@ abyss.Render = function(ctx) {
 		var i, ci;
 		if (align > 0) {
 			if (varw) {
-				for (i = 0; i &lt; len; i++) {
+				for (i = 0; i < len; i++) {
 					ci = text.charCodeAt(i) - 32;
 					acc += font.widths[ci] + font.spacing;
 				}
@@ -1076,7 +1048,7 @@ abyss.Render = function(ctx) {
 			}
 			offset = (align == 1) ? Math.floor(textw / 2) : textw;
 		}
-		for (i = 0; i &lt; len; i++) {
+		for (i = 0; i < len; i++) {
 			ci = text.charCodeAt(i) - 32;
 			var px;
 			if (varw) {
@@ -1104,7 +1076,7 @@ abyss.Render = function(ctx) {
 /**
  * Constructs a Font object.
  * 
- * @class abyss.Font
+ * @class Z9.Font
  * @classdesc Provides a bitmap font construct. This is a faster alternative to native
  *   canvas text rendering routines. It is more consistent since letters and spacings
  *   will always be rendered pixel perfect in all browsers, but it is also more
@@ -1119,7 +1091,7 @@ abyss.Render = function(ctx) {
  *   width characters.
  * @param {object|array} [options.widths] - Map or list of character widths.
  */
-abyss.Font = function(options) {
+Z9.Font = function(options) {
 	this.gfx = options.graphics;
 	this.width = options.size[0];
 	this.height = options.size[1];
@@ -1135,7 +1107,7 @@ abyss.Font = function(options) {
 		else {
 			// convert widths map to an array
 			this.widths = [];
-			for (var c = 32; c &lt;= 126; c++) {
+			for (var c = 32; c <= 126; c++) {
 				var key = String.fromCharCode(c);
 				var w = options.widths[key];
 				this.widths.push((w) ? w : this.width);
@@ -1153,7 +1125,7 @@ abyss.Font = function(options) {
 /**
  * Constructs a Surface object.
  *
- * @class abyss.Surface
+ * @class Z9.Surface
  * @classdesc An interface for drawing graphics. Can be used either to wrap an
  *     existing canvas element or create a virtual canvas element.
  *
@@ -1165,13 +1137,13 @@ abyss.Font = function(options) {
  * @example
  * // Create a new Surface on canvas with ID "myCanvas"
  * // width and height are inferred from the element
- * new abyss.Surface({ fromCanvas: 'myCanvas' });
+ * new Z9.Surface({ fromCanvas: 'myCanvas' });
  *
  * @example
  * // Create a new virtual Surface with size 200x100
- * new abyss.Surface({ width: 200, height: 100 });
+ * new Z9.Surface({ width: 200, height: 100 });
  */
-abyss.Surface = function(options) {
+Z9.Surface = function(options) {
 	options = options || {};
 
 	var canvas, ctx;
@@ -1199,10 +1171,10 @@ abyss.Surface = function(options) {
 	/**
 	 * An instance of Render.
 	 *
-	 * @name abyss.Surface#render
-	 * @type {abyss.Render}
+	 * @name Z9.Surface#render
+	 * @type {Z9.Render}
 	 */
-	this.render = new abyss.Render(ctx);
+	this.render = new Z9.Render(ctx);
 	
 	// clear methods
 	this.cm_clear = function() {
@@ -1218,10 +1190,10 @@ abyss.Surface = function(options) {
 	 * Clears the surface of anything that is drawn on it.
 	 * @name clear
 	 * @function
-	 * @memberof abyss.Surface
+	 * @memberof Z9.Surface
 	 * @instance
 	 */
-	this.clear = NULL;
+	this.clear = Z_NULL;
 
 	/**
 	 * Sets Default clear method. When clear() is called, it will clear all
@@ -1284,7 +1256,7 @@ abyss.Surface = function(options) {
 /**
  * Constructs a State object.
  *
- * @class abyss.State
+ * @class Z9.State
  * @classdesc Implements a game state. Every game state comes with a reference to
  *   the global Surface object which is used for drawing.
  *
@@ -1295,7 +1267,7 @@ abyss.Surface = function(options) {
  * @param {function} [options.draw] - Triggers on state paint events.
  * @param {function} [options.update] - Triggers on state update events.
  */
-abyss.State = function(options) {
+Z9.State = function(options) {
 	options = options || {};
 	this._initialized = false;
 	this._initState = function(surface) {
@@ -1308,23 +1280,23 @@ abyss.State = function(options) {
 	/**
 	 * Global surface.
 	 *
-	 * @name abyss.State#surface
-	 * @type {abyss.Surface}
+	 * @name Z9.State#surface
+	 * @type {Z9.Surface}
 	 */
-	this.surface = NULL;
+	this.surface = Z_NULL;
 	/**
 	 * Shorthand for state.surface.render.
 	 *
-	 * @name abyss.State#paint
-	 * @type {abyss.Render}
+	 * @name Z9.State#paint
+	 * @type {Z9.Render}
 	 */
-	this.paint = NULL;
+	this.paint = Z_NULL;
 	// user functions
-	this.init   = options.init   || EMPTYF;
-	this.in     = options.in     || EMPTYF;
-	this.out    = options.out    || EMPTYF;
-	this.update = options.update || EMPTYF;
-	this.draw   = options.draw   || EMPTYF;
+	this.init   = options.init   || Z_EMPTYF;
+	this.in     = options.in     || Z_EMPTYF;
+	this.out    = options.out    || Z_EMPTYF;
+	this.update = options.update || Z_EMPTYF;
+	this.draw   = options.draw   || Z_EMPTYF;
 };
 
 
@@ -1337,7 +1309,7 @@ abyss.State = function(options) {
 /**
  * Constructs a Game object.
  *
- * @class abyss.Game
+ * @class Z9.Game
  * @classdesc Initializes and runs the game.
  *
  * @param {object} options - Game options.
@@ -1354,11 +1326,11 @@ abyss.State = function(options) {
  *   first time. You can safely omit this argument if your states can load independently.
  *   Use initStates() to initialize states manually.
  */
-abyss.Game = function(options) {
+Z9.Game = function(options) {
 	var self = this;
 
-	var state = NULL;
-	var surface = NULL;
+	var state = Z_NULL;
+	var surface = Z_NULL;
 
 	// references to canvas and canvas parent elements
 	var canvas;
@@ -1391,9 +1363,9 @@ abyss.Game = function(options) {
 	//
 	// view handling
 	//
-	var view_mode = VIEW_DEFAULT;
-	var view_updatehandler = NULL;
-	var view_debounce_timeout = NULL;
+	var view_mode = Z_VIEW_DEFAULT;
+	var view_updatehandler = Z_NULL;
+	var view_debounce_timeout = Z_NULL;
 	var view_debounce_delay = 20;
 	var viewHandlers = {
 		init: {},
@@ -1401,7 +1373,7 @@ abyss.Game = function(options) {
 	};
 
 	// default view handler
-	viewHandlers.init[VIEW_DEFAULT] = function() {
+	viewHandlers.init[Z_VIEW_DEFAULT] = function() {
 		surface.resetSize();
 		canvas.style.width = surface.width + 'px';
 		canvas.style.height = surface.height + 'px';
@@ -1411,19 +1383,19 @@ abyss.Game = function(options) {
 		canvas.style.bottom = '0';
 		canvas.style.margin = 'auto';
 	};
-	viewHandlers.update[VIEW_DEFAULT] = NULL;
+	viewHandlers.update[Z_VIEW_DEFAULT] = Z_NULL;
 
 	// scale-preserveratio handlers
-	viewHandlers.init[VIEW_SCALE_PRESERVERATIO] = function() {
+	viewHandlers.init[Z_VIEW_SCALE_PRESERVERATIO] = function() {
 		surface.resetSize();
-		viewHandlers.update[VIEW_SCALE_PRESERVERATIO]();
+		viewHandlers.update[Z_VIEW_SCALE_PRESERVERATIO]();
 		canvas.style.top = '0';
 		canvas.style.left = '0';
 		canvas.style.right = '0';
 		canvas.style.bottom = '0';
 		canvas.style.margin = 'auto';
 	};
-	viewHandlers.update[VIEW_SCALE_PRESERVERATIO] = function() {
+	viewHandlers.update[Z_VIEW_SCALE_PRESERVERATIO] = function() {
 		var cw = surface.width;
 		var ch = surface.height;
 		var dw = canvasOwner.offsetWidth;
@@ -1444,22 +1416,22 @@ abyss.Game = function(options) {
 	};
 	
 	// scale-full handlers
-	viewHandlers.init[VIEW_SCALE_FULL] = function() {
+	viewHandlers.init[Z_VIEW_SCALE_FULL] = function() {
 		surface.resetSize();
 		canvas.style.width = '100%';
 		canvas.style.height = '100%';
 		canvas.style.top = '0';
 		canvas.style.left = '0';
 	};
-	viewHandlers.update[VIEW_SCALE_FULL] = NULL;
+	viewHandlers.update[Z_VIEW_SCALE_FULL] = Z_NULL;
 	
 	// expand handlers
-	viewHandlers.init[VIEW_EXPAND] = function() {
-		viewHandlers.update[VIEW_EXPAND]();
+	viewHandlers.init[Z_VIEW_EXPAND] = function() {
+		viewHandlers.update[Z_VIEW_EXPAND]();
 		canvas.style.top = '0';
 		canvas.style.left = '0';
 	};
-	viewHandlers.update[VIEW_EXPAND] = function() {
+	viewHandlers.update[Z_VIEW_EXPAND] = function() {
 		surface.resize(canvasOwner.offsetWidth, canvasOwner.offsetHeight);
 	};
 
@@ -1471,7 +1443,7 @@ abyss.Game = function(options) {
 	/**
 	 * Changes active game state.
 	 *
-	 * @param {abyss.State} next - State to switch to.
+	 * @param {Z9.State} next - State to switch to.
 	 */
 	this.setState = function(next) {
 		if (state) {
@@ -1488,7 +1460,7 @@ abyss.Game = function(options) {
 	/**
 	 * Retreives active game state.
 	 *
-	 * @returns {abyss.State}
+	 * @returns {Z9.State}
 	 */
 	this.getState = function() {
 		return state;
@@ -1497,7 +1469,7 @@ abyss.Game = function(options) {
 	/**
 	 * Retreives the main game surface.
 	 * 
-	 * @returns {abyss.Surface}
+	 * @returns {Z9.Surface}
 	 */
 	this.getSurface = function() {
 		return surface;
@@ -1511,7 +1483,7 @@ abyss.Game = function(options) {
 	 */
 	this.initStates = function(states) {
 		var n_states = states.length;
-		for (var i = 0; i &lt; n_states; i++) {
+		for (var i = 0; i < n_states; i++) {
 			var game_state = states[i];
 			if (!game_state._initialized) {
 				game_state._initState(surface);
@@ -1527,7 +1499,7 @@ abyss.Game = function(options) {
 		// initialize game states on startup if provided
 		if (options.gameStates instanceof Array) {
 			var n_states = options.gameStates.length;
-			for (var i = 0; i &lt; n_states; i++) {
+			for (var i = 0; i < n_states; i++) {
 				var game_state = options.gameStates[i];
 				game_state._initState(surface);
 				game_state.init();	
@@ -1559,8 +1531,8 @@ abyss.Game = function(options) {
 	this.setViewMode = function(mode) {
 		// remove the update handler and the resize event
 		if (view_updatehandler) {
-			view_updatehandler = NULL;
-			//window.onresize = NULL;
+			view_updatehandler = Z_NULL;
+			//window.onresize = Z_NULL;
 			window.removeEventListener('resize', pollViewUpdate);
 		}
 		// setup view mode
@@ -1568,17 +1540,17 @@ abyss.Game = function(options) {
 			switch (mode.trim().toLowerCase()) {
 				case 'scale-preserveratio':
 				case 'scale_preserveratio':
-					view_mode = VIEW_SCALE_PRESERVERATIO;
+					view_mode = Z_VIEW_SCALE_PRESERVERATIO;
 					break;
 				case 'scale-full':
 				case 'scale_full':
-					view_mode = VIEW_SCALE_FULL;
+					view_mode = Z_VIEW_SCALE_FULL;
 					break;
 				case 'expand':
-					view_mode = VIEW_EXPAND;
+					view_mode = Z_VIEW_EXPAND;
 					break;
 				default:
-					view_mode = VIEW_DEFAULT;
+					view_mode = Z_VIEW_DEFAULT;
 					break;
 			}
 		}
@@ -1625,31 +1597,8 @@ abyss.Game = function(options) {
 	canvasOwner = canvas.parentElement;
 
 	// create the surface object
-	surface = new abyss.Surface({ fromCanvas: canvas });
+	surface = new Z9.Surface({ fromCanvas: canvas });
 	if (options.background) {
 		surface.setFillClearMethod(options.background);
 	}
 };
-</code></pre>
-        </article>
-    </section>
-
-
-
-
-</div>
-
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="abyss.AABB.html">AABB</a></li><li><a href="abyss.AssetLoader.html">AssetLoader</a></li><li><a href="abyss.Configuration.html">Configuration</a></li><li><a href="abyss.Font.html">Font</a></li><li><a href="abyss.Game.html">Game</a></li><li><a href="abyss.Grid2D.html">Grid2D</a></li><li><a href="abyss.Input.html">Input</a></li><li><a href="abyss.KeyInput.html">KeyInput</a></li><li><a href="abyss.Render.html">Render</a></li><li><a href="abyss.State.html">State</a></li><li><a href="abyss.Surface.html">Surface</a></li><li><a href="abyss.Timer.html">Timer</a></li></ul><h3>Namespaces</h3><ul><li><a href="abyss.html">abyss</a></li></ul><h3><a href="global.html">Global</a></h3>
-</nav>
-
-<br class="clear">
-
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Aug 18 2017 15:32:25 GMT+0200 (Central Europe Daylight Time)
-</footer>
-
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
-</body>
-</html>

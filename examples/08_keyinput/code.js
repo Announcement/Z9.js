@@ -1,18 +1,18 @@
 /*
- *  Abyss.js - Example 08 - Key Input
+ *  Z9.js - Example 08 - Key Input
  * 
  */
 
 // create a key input handler
-var keyInputHandler = new abyss.KeyInput();
+var keyInputHandler = new Z9.KeyInput();
 
 // create the main state
-var myState = new abyss.State();
+var myState = new Z9.State();
 
 // called when state initializes
 myState.init = function() {
 	this.strBuff = '';
-	this.blinkTimer = new abyss.Timer(30);
+	this.blinkTimer = new Z9.Timer(30);
 	this.showCaret = false;
 	this.keyStates = {
 		up: false,
@@ -106,8 +106,8 @@ myState.update = function(dt) {
 };
 
 // setup and run the game
-var myGame = new abyss.Game({
-	canvasId: 'abyssexample', // canvas element to initialize the game on
+var myGame = new Z9.Game({
+	canvasId: 'Z9example', // canvas element to initialize the game on
 	state: myState // starting game state
 });
 

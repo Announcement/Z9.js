@@ -1,2 +1,2 @@
 #!/bin/bash
-jshint src/abyss.js
+jshint src/Z9.js

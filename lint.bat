@@ -1,2 +1,2 @@
-@jshint src\abyss.js | more
+@jshint src\Z9.js | more
 @pause > nul

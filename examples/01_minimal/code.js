@@ -1,10 +1,10 @@
 /*
- *  Abyss.js - Example 01 - Minimal
+ *  Z9.js - Example 01 - Minimal
  * 
  */
 
 // create a game state
-var myState = new abyss.State();
+var myState = new Z9.State();
 
 // called when state initializes
 myState.init = function() {
@@ -22,8 +22,8 @@ myState.draw = function() {
 };
 
 // setup game
-var myGame = new abyss.Game({
-	canvasId: 'abyssexample', // canvas element to initialize the game on
+var myGame = new Z9.Game({
+	canvasId: 'Z9example', // canvas element to initialize the game on
 	state: myState, // starting game state
 	simpleLoop: true // use a simple game loop that only draws and doesn't call update
 });

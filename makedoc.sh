@@ -1,2 +1,2 @@
 #!/bin/bash
-jsdoc -d doc src/abyss.js
+jsdoc -d doc src/Z9.js

@@ -1,5 +1,5 @@
 /*
- *  Abyss.js - Example 05 - View Mode
+ *  Z9.js - Example 05 - View Mode
  * 
  */
 
@@ -39,20 +39,20 @@ function BouncyBox(state, options) {
 }
 
 // create the main state
-var myState = new abyss.State();
+var myState = new Z9.State();
 
 // called when state initializes
 myState.init = function() {
 	// create several bouncing boxes
 	this.boxes = [];
 	for (var i = 0; i < 50; i++) {
-		var box_size = abyss.getRandomInt(10, 30);
+		var box_size = Z9.getRandomInt(10, 30);
 		this.boxes.push(new BouncyBox(this, {
-			x: abyss.getRandomInt(0, 400 - box_size),
-			y: abyss.getRandomInt(0, 300 - box_size),
-			vel_x: abyss.getRandomInt(-200, 200) / 100,
-			vel_y: abyss.getRandomInt(-200, 200) / 100,
-			color: abyss.choose(['orange', 'red', 'blue', 'purple', 'gray', 'green']),
+			x: Z9.getRandomInt(0, 400 - box_size),
+			y: Z9.getRandomInt(0, 300 - box_size),
+			vel_x: Z9.getRandomInt(-200, 200) / 100,
+			vel_y: Z9.getRandomInt(-200, 200) / 100,
+			color: Z9.choose(['orange', 'red', 'blue', 'purple', 'gray', 'green']),
 			size: box_size
 		}));
 	}
@@ -74,8 +74,8 @@ myState.update = function(delta) {
 };
 
 // setup and run the game
-var myGame = new abyss.Game({
-	canvasId: 'abyssexample',
+var myGame = new Z9.Game({
+	canvasId: 'Z9example',
 	state: myState
 });
 

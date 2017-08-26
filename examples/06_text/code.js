@@ -1,5 +1,5 @@
 /*
- *  Abyss.js - Example 06 - Text
+ *  Z9.js - Example 06 - Text
  * 
  */
 
@@ -12,7 +12,7 @@ var myAssets = {
 };
 
 // asset loader
-var myLoader = new abyss.AssetLoader();
+var myLoader = new Z9.AssetLoader();
 
 // called when loader finishes loading assets
 myLoader.done = function() {
@@ -20,11 +20,11 @@ myLoader.done = function() {
 };
 
 // create the main state
-var myState = new abyss.State();
+var myState = new Z9.State();
 
 // called when state initializes
 myState.init = function() {
-	this.font = new abyss.Font({
+	this.font = new Z9.Font({
 		graphics: myLoader.get('font_gfx'),
 		size: [16, 16]
 	});
@@ -45,8 +45,8 @@ myState.draw = function() {
 };
 
 // setup and run the game
-var myGame = new abyss.Game({
-	canvasId: 'abyssexample', // canvas element to initialize the game on
+var myGame = new Z9.Game({
+	canvasId: 'Z9example', // canvas element to initialize the game on
 	state: myState, // starting game state
 	simpleLoop: true // use a simple game loop that only draws and doesn't call update
 });

@@ -1,5 +1,5 @@
 /*
- *  Abyss.js - Example 03 - Graphics
+ *  Z9.js - Example 03 - Graphics
  * 
  */
 
@@ -11,7 +11,7 @@ var myAssets = {
 };
 
 // asset loader
-var myLoader = new abyss.AssetLoader();
+var myLoader = new Z9.AssetLoader();
 
 // called when loader finishes loading assets
 myLoader.done = function() {
@@ -19,7 +19,7 @@ myLoader.done = function() {
 };
  
 // create the main state
-var myState = new abyss.State();
+var myState = new Z9.State();
 
 // called when state initializes
 myState.init = function() {
@@ -32,8 +32,8 @@ myState.draw = function() {
 };
 
 // setup and run the game
-var myGame = new abyss.Game({
-	canvasId: 'abyssexample', // canvas element to initialize the game on
+var myGame = new Z9.Game({
+	canvasId: 'Z9example', // canvas element to initialize the game on
 	state: myState, // starting game state
 	simpleLoop: true // use a simple game loop that only draws and doesn't update
 });

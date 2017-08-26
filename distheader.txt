@@ -1,4 +1,4 @@
-/* Abyss.js 0.5.0
+/* Z9.js 0.5.0
  * (c) 2017 Danijel Durakovic
  * MIT License */
  

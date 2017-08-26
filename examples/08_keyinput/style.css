@@ -2,7 +2,7 @@ body {
 	margin: 0;
 	background-color: #eee;
 }
-#abysscontainer {
+#Z9container {
 	position: absolute;
 	background-color: #ddd;
 	width: 100%;
@@ -13,7 +13,7 @@ body {
 	bottom: 0;
 	margin: auto;
 }
-#abyssexample {
+#Z9example {
 	position: absolute;
 	background-color: #fff;
 	left: 0;
