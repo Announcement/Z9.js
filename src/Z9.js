@@ -232,35 +232,6 @@ Z9.Grid2D = function(w, h, defaultValue) {
 };
 
 /**
- * Constructs an Axis-aligned bounding box object.
- *
- * @class Z9.AABB
- * @classdesc A simple AABB data structure.
- *
- * @param {number} x1
- * @param {number} y1
- * @param {number} x2
- * @param {number} y2
- */
-Z9.AABB = function(x1, y1, x2, y2) {
-	this.x1 = x1 || 0;
-	this.y1 = y1 || 0;
-	this.x2 = x2 || 0;
-	this.y2 = y2 || 0;
-	/**
-	 * Check if two AABBs intersect.
-	 *
-	 * @param {Z9.AABB} aabb
-	 *
-	 * @returns {bool}
-	 */
-	this.intersects = function(aabb) {
-		return (this.x2 > aabb.x1 && this.y2 > aabb.y1 &&
-			this.x1 < aabb.x2 && this.y1 < aabb.y2);
-	};
-};
-
-/**
  * Constructs a Timer object.
  *
  * @class Z9.Timer
