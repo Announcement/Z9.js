@@ -1,1 +1,1 @@
-shint "src\Z9.js"
+jshint "src\Z9.js"
